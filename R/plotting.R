@@ -27,6 +27,19 @@ map_raster <- function(rasterized, label_name = "Raster", low = "white", high = 
     ggplot2::theme(legend.position = "none")
 }
 
+map_raster_leaflet <- function(rasterized, colors = "Reds") {
+  colors = "Reds"
+  pal = leaflet::colorNumeric(colors, raster::values(rasterized), na.color = "transparent")
+
+  map = leaflet::leaflet() %>%
+          leaflet::addTiles() %>%
+          leaflet::addProviderTiles(leaflet::providers$Stamen.Toner) %>%
+          leaflet::addRasterImage(rasterized, colors = pal, opacity = 0.8) %>%
+          leaflet::addLegend(pal = pal, values = raster::values(rasterized), title = "Supply")
+
+  map
+}
+
 # plot_2dkde_data <- function(kdedata, name, title) {
 #   png(filename = paste0(name, "_heatmap.png"), width = 1200, height = 1200, pointsize = 24)
 #   image(kdedata, main = name)
@@ -50,20 +63,7 @@ map_raster <- function(rasterized, label_name = "Raster", low = "white", high = 
 #   dev.off()
 # }
 #
-# create_rasterized_leaflet_plot <- function(rasterized, name) {
-#   #colors = c("#0C2C84", "#41B6C4", "#FFFFCC")
-#   #colors = "YlOrRd"
-#   colors = "Reds"
-#   pal = colorNumeric(colors, values(rasterized), na.color = "transparent")
-#
-#   map = leaflet() %>%
-#           addTiles() %>%
-#           addProviderTiles(providers$Stamen.Toner) %>%
-#           addRasterImage(rasterized, colors = pal, opacity = 0.8) %>%
-#           addLegend(pal = pal, values = values(rasterized), title = "Supply")
-#
-#   saveWidget(map, file=paste(name, "_raster.html", sep=''))
-# }
+
 #
 # create_leaflet_plot <- function(kde_data, name, pointsdata) {
 #   contour_data = contourLines(kde_data, nlevels = 15) # Any more than 15 and the layers are no longer transparent

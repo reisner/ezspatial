@@ -26,6 +26,12 @@ map_raster(raster, label = "Counting Events")
 
 ![Grid Counts](/image/gridcounts.png) <!-- .element height="50%" width="50%" -->
 
+Or, plot in leaflet:
+
+```
+map = map_raster_leaflet(raster)
+saveWidget(map, file = "map.html")
+```
 
 ### Generating 2D-KDE and plotting
 

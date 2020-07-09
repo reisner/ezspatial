@@ -18,4 +18,5 @@ Imports:
   sp,
   testthat
 Suggests:
-  ggmap
+  ggmap,
+  leaflet
