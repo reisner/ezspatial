@@ -24,7 +24,7 @@ raster = ezspatial::rasterize_points(points, grid)
 map_raster(raster, label = "Counting Events")
 ```
 
-![Grid Counts](/image/gridcounts.png)
+![Grid Counts](/image/gridcounts.png) <!-- .element height="50%" width="50%" -->
 
 
 ### Generating 2D-KDE and plotting
