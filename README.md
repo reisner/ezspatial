@@ -21,7 +21,7 @@ points = ezspatial::generate_points(num_points = 5000)
 ```
 grid = ezspatial::create_grid(num_rows = 50, num_cols = 50)
 raster = ezspatial::rasterize_points(points, grid)
-map_raster(raster, label = "Counting Events")
+map_raster(raster, label = "Heatmap - Counting Events")
 ```
 
 ![Grid Counts](/image/gridcounts.png) <!-- .element height="50%" width="50%" -->

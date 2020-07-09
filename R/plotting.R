@@ -1,4 +1,7 @@
-map_raster <- function(rasterized, label_name = "Raster", low = "white", high = scales::muted("red")) {
+map_raster <- function(rasterized,
+                       title = "Heatmap",
+                       low = "white",
+                       high = scales::muted("red")) {
   rtp = raster::rasterToPolygons(rasterized)
   rtp@data$id <- 1:nrow(rtp@data)   # add id column for join
   rtpFort <- ggplot2::fortify(rtp, data = rtp@data)
@@ -23,7 +26,7 @@ map_raster <- function(rasterized, label_name = "Raster", low = "white", high = 
                    plot.margin = grid::unit(c(0, 0, 0, 0), 'lines')) +
     ggplot2::xlab('') +
     ggplot2::ylab('') +
-    ggplot2::ggtitle(paste("Heatmap -", label_name)) +
+    ggplot2::ggtitle(title) +
     ggplot2::theme(legend.position = "none")
 }
 
