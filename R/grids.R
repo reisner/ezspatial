@@ -39,32 +39,22 @@ rasterize_points <- function(pointsdf,
   }
 }
 
+rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
+  x = kde_data$x
+  y = kde_data$y
+  z = c(kde_data$z) # z values, one column after another
+  point_data = data.frame(longitude = rep(x, length(y)),
+                          latitude = rep(y, each = length(x)),
+                          z = z)
+  sp::coordinates(point_data) = ~longitude + latitude
+  raster_layer = raster::rasterize(point_data, grid, fun = mean, field = 'z')
 
+  if (normalize) {
+    raster::values(raster_layer) = 100 * raster::values(raster_layer) / max(raster::values(raster_layer), na.rm = TRUE) # Normalize to [0,100]
+  }
 
-# create_raster <- function(df, kde_h, grid_n, lims) {
-#   grid =
-#
-#   raster = rasterize_kde(kde, grid)
-#   values(raster) = 100 * values(raster) / max(values(raster), na.rm = TRUE) # Normalize to [0,100]
-#
-#   raster
-# }
-#
-#
-# rasterize_kde <- function(kde_data, grid) {
-#   x = kde_data$x
-#   y = kde_data$y
-#   z = c(kde_data$z) # z values, one column after another
-#   point_data = data.frame(longitude = rep(x, length(y)),
-#                           latitude = rep(y, each = length(x)),
-#                           z = z)
-#   coordinates(point_data) = ~longitude + latitude
-#   raster_layer = rasterize(point_data, grid, fun = mean, field = 'z')
-#
-#   return(raster_layer)
-# }
-#
-
+  raster_layer
+}
 
 
 

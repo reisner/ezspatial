@@ -43,29 +43,29 @@ map_raster_leaflet <- function(rasterized, colors = "Reds") {
   map
 }
 
-# plot_2dkde_data <- function(kdedata, name, title) {
-#   png(filename = paste0(name, "_heatmap.png"), width = 1200, height = 1200, pointsize = 24)
-#   image(kdedata, main = name)
-#   dev.off()
-#
-#   png(filename = paste0(name, "_persp.png"), width = 1200, height = 1200, pointsize = 24)
-#   colors = colorRampPalette(c("blue", "red"))(100)
-#   z = kdedata$z
-#   z.facet.center = (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)]) / 4 # height of facets
-#   z.facet.range = cut(z.facet.center, 100) # Range of the facet center on a 100-scale (number of colors)
-#   # This looks weird with lots of data (i.e. n >= 500 from kde2d).
-#   # Setting border = NA makes it displayable, but doesnt look great. Fiddling
-#   # with "border" and lwd helps a bit.
-#   persp(kdedata, theta = 30, phi = 30, expand = 0.2,
-#         shade = NA, col = colors[z.facet.range], border = NA, #"grey80",
-#         box = FALSE, main = name)
-#   dev.off()
-#
-#   png(filename = paste0(name, "_contour.png"), width = 1200, height = 1200, pointsize = 24)
-#   contour(kdedata, main = name)
-#   dev.off()
-# }
-#
+plot_2dkde_data <- function(kdedata, name) {
+  png(filename = paste0(name, "_heatmap.png"), width = 1200, height = 1200, pointsize = 24)
+  image(kdedata, main = name)
+  dev.off()
+
+  png(filename = paste0(name, "_persp.png"), width = 1200, height = 1200, pointsize = 24)
+  colors = colorRampPalette(c("blue", "red"))(100)
+  z = kdedata$z
+  z.facet.center = (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)]) / 4 # height of facets
+  z.facet.range = cut(z.facet.center, 100) # Range of the facet center on a 100-scale (number of colors)
+  # This looks weird with lots of data (i.e. n >= 500 from kde2d).
+  # Setting border = NA makes it displayable, but doesnt look great. Fiddling
+  # with "border" and lwd helps a bit.
+  persp(kdedata, theta = 30, phi = 30, expand = 0.2,
+        shade = NA, col = colors[z.facet.range], border = NA, #"grey80",
+        box = FALSE, main = name)
+  dev.off()
+
+  png(filename = paste0(name, "_contour.png"), width = 1200, height = 1200, pointsize = 24)
+  contour(kdedata, main = name)
+  dev.off()
+}
+
 
 #
 # create_leaflet_plot <- function(kde_data, name, pointsdata) {
@@ -96,3 +96,38 @@ map_raster_leaflet <- function(rasterized, colors = "Reds") {
 #
 #   saveWidget(m, file=paste(name, ".html", sep=''))
 # }
+
+
+
+
+# map = leaflet() %>%
+#         addProviderTiles(providers$Stamen.TonerLite,
+#           options = providerTileOptions(noWrap = TRUE)
+#         )
+# layers = input$layers
+# if (length(layers) > 0) {
+#   display_layer = NULL
+#   if (length(layers) == 1) {
+#     display_layer = dataset[[layers]] # layers is a character string if there's only one 😠
+#   } else {
+#     layerstack = raster::stack()
+#     for (layer_name in layers) {
+#       layer = dataset[[layer_name]]
+#       layerstack = raster::stack(layerstack, layer)
+#     }
+#     display_layer = do.call(input$agg_function, c(layerstack))
+#     #display_layer = max(layerstack)
+#   }
+#   #values(display_layer)[values(display_layer) == 0] = NA
+#   #colors = colorNumeric(c("#0C2C84", "#41B6C4", "#FFFFCC"), values(display_layer), na.color = "transparent"),
+#   #palette = colorBin("Blues", domain = 0:1)
+#   #palette = colorBin("Spectral", domain = 0:1)
+#   palette = colorBin("YlOrRd", domain = 0:1)
+#   colors = colorNumeric(palette, values(display_layer), na.color = "transparent")
+#   #colors = colorQuantile(palette, values(display_layer), na.color = "transparent")
+#   map = map %>%
+#           addRasterImage(display_layer,
+#                          colors = colors,
+#                          opacity = 0.7)
+# } else {
+#   map = fitBounds(map, xl, yl, xu, yu)
