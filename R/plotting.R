@@ -43,12 +43,16 @@ map_raster_leaflet <- function(rasterized, colors = "Reds") {
   map
 }
 
-plot_2dkde_data <- function(kdedata, name) {
-  png(filename = paste0(name, "_heatmap.png"), width = 1200, height = 1200, pointsize = 24)
-  image(kdedata, main = name)
+plot_kde <- function(kdedata, filename = "heatmap.png") {
+  cat("Saving to", filename, "\n")
+  png(filename, width = 1200, height = 1200, pointsize = 24)
+  image(kdedata)
   dev.off()
+}
 
-  png(filename = paste0(name, "_persp.png"), width = 1200, height = 1200, pointsize = 24)
+plot_kde_persp <- function(kdedata, filename = "persp.png") {
+  cat("Saving to", filename, "\n")
+  png(filename = filename, width = 1200, height = 1200, pointsize = 24)
   colors = colorRampPalette(c("blue", "red"))(100)
   z = kdedata$z
   z.facet.center = (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)]) / 4 # height of facets
@@ -58,11 +62,14 @@ plot_2dkde_data <- function(kdedata, name) {
   # with "border" and lwd helps a bit.
   persp(kdedata, theta = 30, phi = 30, expand = 0.2,
         shade = NA, col = colors[z.facet.range], border = NA, #"grey80",
-        box = FALSE, main = name)
+        box = FALSE, main = filename)
   dev.off()
+}
 
-  png(filename = paste0(name, "_contour.png"), width = 1200, height = 1200, pointsize = 24)
-  contour(kdedata, main = name)
+plot_kde_contours <- function(kdedata, filename = "contour.png") {
+  cat("Saving to", filename, "\n")
+  png(filename = filename, width = 1200, height = 1200, pointsize = 24)
+  contour(kdedata, main = filename)
   dev.off()
 }
 

@@ -62,6 +62,13 @@ map_raster(raster_layer, title = "Heatmap - Smoothed")
 
 ![Grid Counts](/image/smoothed.png) <!-- .element height="50%" width="50%" -->
 
+You can also plot the kde values directly using one of:
+
+```
+plot_kde(kde)
+plot_kde_persp(kde)
+plot_kde_contours(kde)
+```
 
 ### Leaflet Plots
 
@@ -74,18 +81,43 @@ saveWidget(map, file = "map.html")
 
 ### Convenience Functions
 
+For converting between lat/long and metres, you can use:
 
+```
+> deg_lng_per_m()
+[1] 9.717732e-06
+> deg_lat_per_m()
+[1] 9.041933e-06
+> m_per_deg_lat()
+[1] 110595.8
+> m_per_deg_lng()
+[1] 102904.7
+```
 
+But these are dependant on where you are on the globe, so if you're not plotting points near Edmonton, you'll have to use:
 
-# grid_in_m = 300
-# convert_and_add_geo_features <- function(dataset,
-#                                          grid_in_m,
-#                                          xl = -113.7067697598,
-#                                          xu = -113.3412240000,
-#                                          yl = 53.3962310731233,
-#                                          yu = 53.6446442889423,
-#                                          format = 'dataframe') {
-#   lng_diff = xu - xl
-#   lat_diff = yu - yl
-#   ncols = round(lat_diff / (deg_lng_per_m() * grid_in_m))
-#   nrows = round(lng_diff / (deg_lat_per_m() * grid_in_m))
+```
+# Somewhere in the Atlantic Ocean... (0,0)
+> deg_lng_per_m(lngMid = 0)
+[1] 8.983155e-06
+> deg_lat_per_m(latMid = 0)
+[1] 9.043695e-06
+> m_per_deg_lat(latMid = 0)
+[1] 110574.3
+> m_per_deg_lng(lngMid = 0)
+[1] 111319.5
+```
+
+So, if you know your lat/lng ranges and you know you want 300m grid cells, you can figure out how many grid cells this corresponds to:
+
+```
+grid_in_m = 300
+xl = -113.7067697598
+xu = -113.3412240000
+yl = 53.3962310731233
+yu = 53.6446442889423
+lng_diff = xu - xl
+lat_diff = yu - yl
+ncols = round(lat_diff / (deg_lng_per_m() * grid_in_m))
+nrows = round(lng_diff / (deg_lat_per_m() * grid_in_m))
+```
