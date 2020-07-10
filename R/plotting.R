@@ -43,16 +43,11 @@ map_raster_leaflet <- function(rasterized, colors = "Reds") {
   map
 }
 
-plot_kde <- function(kdedata, filename = "heatmap.png") {
-  cat("Saving to", filename, "\n")
-  png(filename, width = 1200, height = 1200, pointsize = 24)
+plot_kde <- function(kdedata) {
   image(kdedata)
-  dev.off()
 }
 
-plot_kde_persp <- function(kdedata, filename = "persp.png") {
-  cat("Saving to", filename, "\n")
-  png(filename = filename, width = 1200, height = 1200, pointsize = 24)
+plot_kde_persp <- function(kdedata, title = "KDE Perspective Plot") {
   colors = colorRampPalette(c("blue", "red"))(100)
   z = kdedata$z
   z.facet.center = (z[-1, -1] + z[-1, -ncol(z)] + z[-nrow(z), -1] + z[-nrow(z), -ncol(z)]) / 4 # height of facets
@@ -62,15 +57,11 @@ plot_kde_persp <- function(kdedata, filename = "persp.png") {
   # with "border" and lwd helps a bit.
   persp(kdedata, theta = 30, phi = 30, expand = 0.2,
         shade = NA, col = colors[z.facet.range], border = NA, #"grey80",
-        box = FALSE, main = filename)
-  dev.off()
+        box = FALSE, main = title)
 }
 
-plot_kde_contours <- function(kdedata, filename = "contour.png") {
-  cat("Saving to", filename, "\n")
-  png(filename = filename, width = 1200, height = 1200, pointsize = 24)
-  contour(kdedata, main = filename)
-  dev.off()
+plot_kde_contours <- function(kdedata, title = "KDE Contour Plot") {
+  contour(kdedata, main = title)
 }
 
 

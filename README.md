@@ -42,6 +42,9 @@ First 10 features:
 ### Counting events in a grid
 
 ```
+# Fake Data:
+sf_points = ezspatial::generate_points(num_points = 5000)
+
 grid = ezspatial::create_grid(num_rows = 50, num_cols = 50)
 raster = ezspatial::rasterize_points(sf_points, grid)
 map_raster(raster, title = "Heatmap - Counting Events")
@@ -54,6 +57,9 @@ map_raster(raster, title = "Heatmap - Counting Events")
 
 Use the `radius_in_metres` parameter to define the bin-width (the area of effect of each point).
 ```
+# Fake Data:
+sf_points = ezspatial::generate_points(num_points = 5000)
+
 grid = ezspatial::create_grid(num_rows = 50, num_cols = 50)
 kde = generate_kde_sf(sf_points, radius_in_metres = 10000)
 raster_layer = rasterize_kde(kde, grid)
@@ -66,7 +72,7 @@ You can also plot the kde values directly using one of:
 
 ```
 plot_kde(kde)
-plot_kde_persp(kde)
+plot_kde_persp(kde) # Can be pretty slow!
 plot_kde_contours(kde)
 ```
 
