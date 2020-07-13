@@ -5,6 +5,7 @@ Process, Plot and Analyze spatial data with ease. Default values are for Edmonto
 ## Installation
 
 ```
+install.packages("devtools")
 devtools::install_github("reisner/ezspatial")
 ```
 

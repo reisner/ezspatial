@@ -1,3 +1,4 @@
+#' @export
 create_grid <- function(num_rows = 100,
                         num_cols = 100,
                         min_lat = getOption("ezspatial-min_lat"),
@@ -12,6 +13,7 @@ create_grid <- function(num_rows = 100,
                  ymx = max_lat)
 }
 
+#' @export
 rasterize_points <- function(pointsdf,
                              grid,
                              return_df = FALSE) {

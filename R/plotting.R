@@ -1,3 +1,4 @@
+#' @export
 map_raster <- function(rasterized,
                        title = "Heatmap",
                        low = "white",
@@ -30,6 +31,7 @@ map_raster <- function(rasterized,
     ggplot2::theme(legend.position = "none")
 }
 
+#' @export
 map_raster_leaflet <- function(rasterized, colors = "Reds") {
   colors = "Reds"
   pal = leaflet::colorNumeric(colors, raster::values(rasterized), na.color = "transparent")
@@ -43,10 +45,12 @@ map_raster_leaflet <- function(rasterized, colors = "Reds") {
   map
 }
 
+#' @export
 plot_kde <- function(kdedata) {
   image(kdedata)
 }
 
+#' @export
 plot_kde_persp <- function(kdedata, title = "KDE Perspective Plot") {
   colors = colorRampPalette(c("blue", "red"))(100)
   z = kdedata$z
@@ -60,6 +64,7 @@ plot_kde_persp <- function(kdedata, title = "KDE Perspective Plot") {
         box = FALSE, main = title)
 }
 
+#' @export
 plot_kde_contours <- function(kdedata, title = "KDE Contour Plot") {
   contour(kdedata, main = title)
 }

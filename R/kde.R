@@ -1,3 +1,4 @@
+#' @export
 generate_kde_sf <- function(points,
                             radius_in_metres = 100,
                             grid_n = 1000,
@@ -12,6 +13,7 @@ generate_kde_sf <- function(points,
     generate_kde(radius_in_metres, grid_n, min_lat, max_lat, min_lng, max_lng)
 }
 
+#' @export
 generate_kde <- function(pointsdf,
                          radius_in_metres = 100,
                          grid_n = 1000,
@@ -25,6 +27,7 @@ generate_kde <- function(pointsdf,
   MASS::kde2d(pointsdf$longitude, pointsdf$latitude, kde_h, n = grid_n, lims = lims)
 }
 
+#' @export
 get_h_for_radius_m <- function(radius_in_m) {
   c(radius_in_m * deg_lng_per_m(),
     radius_in_m * deg_lat_per_m())
