@@ -17,6 +17,7 @@ export(map_raster_leaflet)
 export(plot_kde)
 export(plot_kde_contours)
 export(plot_kde_persp)
+export(rasterize_kde)
 export(rasterize_points)
 
 importFrom(magrittr,"%>%")

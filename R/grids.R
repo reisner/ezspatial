@@ -41,6 +41,7 @@ rasterize_points <- function(pointsdf,
   }
 }
 
+#' @export
 rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
   x = kde_data$x
   y = kde_data$y
