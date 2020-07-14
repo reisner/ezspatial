@@ -2,11 +2,11 @@
 # TODO: https://stackoverflow.com/questions/37660950/how-to-create-2d-data-set-from-gaussian-distribution-in-r
 
 #' @export
-generate_points <- function(num_points = 1000,
-                            min_lat = getOption("ezspatial-min_lat"),
-                            max_lat = getOption("ezspatial-max_lat"),
-                            min_lng = getOption("ezspatial-min_lng"),
-                            max_lng = getOption("ezspatial-max_lng"),
+generate_points <- function(min_lat,
+                            max_lat,
+                            min_lng,
+                            max_lng,
+                            num_points = 1000,
                             sf = TRUE,
                             crs = 4326) {
   latitude = runif(num_points, min = min_lat, max = max_lat)
@@ -22,10 +22,10 @@ generate_points <- function(num_points = 1000,
 
 #' @export
 filter_to_area <- function(dataset,
-                           min_lat = getOption("ezspatial-min_lat"),
-                           max_lat = getOption("ezspatial-max_lat"),
-                           min_lng = getOption("ezspatial-min_lng"),
-                           max_lng = getOption("ezspatial-max_lng")) {
+                           min_lat,
+                           max_lat,
+                           min_lng,
+                           max_lng) {
   dataset %>%
     dplyr::filter(latitude >= min_lat) %>%
     dplyr::filter(latitude <= max_lat) %>%

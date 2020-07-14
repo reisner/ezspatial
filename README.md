@@ -14,7 +14,11 @@ devtools::install_github("reisner/ezspatial")
 Generate sample data:
 
 ```
-sf_points = ezspatial::generate_points(num_points = 5000)
+min_lat = 53.381661
+max_lat = 53.673092
+min_lng = -113.764219
+max_lng = -113.246489
+sf_points = ezspatial::generate_points(min_lat, max_lat, min_lng, max_lng, num_points = 5000)
 ```
 
 By default, this generates points in an `sf` dataframe:
@@ -43,10 +47,7 @@ First 10 features:
 ### Counting events in a grid
 
 ```
-# Fake Data:
-sf_points = ezspatial::generate_points(num_points = 5000)
-
-grid = ezspatial::create_grid(num_rows = 50, num_cols = 50)
+grid = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
 raster = ezspatial::rasterize_points(sf_points, grid)
 map_raster(raster, title = "Heatmap - Counting Events")
 ```
@@ -58,11 +59,8 @@ map_raster(raster, title = "Heatmap - Counting Events")
 
 Use the `radius_in_metres` parameter to define the bin-width (the area of effect of each point).
 ```
-# Fake Data:
-sf_points = ezspatial::generate_points(num_points = 5000)
-
-grid = ezspatial::create_grid(num_rows = 50, num_cols = 50)
-kde = generate_kde_sf(sf_points, radius_in_metres = 10000)
+grid = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
+kde = generate_kde_sf(min_lat, max_lat, min_lng, max_lng, sf_points, radius_in_metres = 10000)
 raster_layer = rasterize_kde(kde, grid)
 map_raster(raster_layer, title = "Heatmap - Smoothed")
 ```

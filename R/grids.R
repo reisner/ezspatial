@@ -1,10 +1,10 @@
 #' @export
-create_grid <- function(num_rows = 100,
-                        num_cols = 100,
-                        min_lat = getOption("ezspatial-min_lat"),
-                        max_lat = getOption("ezspatial-max_lat"),
-                        min_lng = getOption("ezspatial-min_lng"),
-                        max_lng = getOption("ezspatial-max_lng")) {
+create_grid <- function(min_lat,
+                        max_lat,
+                        min_lng,
+                        max_lng,
+                        num_rows = 100,
+                        num_cols = 100) {
   raster::raster(nrows = num_rows,
                  ncols = num_cols,
                  xmn = min_lng,

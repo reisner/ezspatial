@@ -3,6 +3,8 @@
 export(create_grid)
 export(deg_lat_per_m)
 export(deg_lng_per_m)
+export(edm_lat_range)
+export(edm_lng_range)
 export(filter_to_area)
 export(generate_kde)
 export(generate_kde_sf)

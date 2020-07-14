@@ -1,26 +1,26 @@
 #' @export
-generate_kde_sf <- function(points,
+generate_kde_sf <- function(min_lat,
+                            max_lat,
+                            min_lng,
+                            max_lng,
+                            points,
                             radius_in_metres = 100,
-                            grid_n = 1000,
-                            min_lat = getOption("ezspatial-min_lat"),
-                            max_lat = getOption("ezspatial-max_lat"),
-                            min_lng = getOption("ezspatial-min_lng"),
-                            max_lng = getOption("ezspatial-max_lng")) {
+                            grid_n = 1000) {
   points %>%
     sf::st_coordinates() %>%
     data.frame() %>%
     dplyr::rename(longitude = X, latitude = Y) %>%
-    generate_kde(radius_in_metres, grid_n, min_lat, max_lat, min_lng, max_lng)
+    generate_kde(min_lat, max_lat, min_lng, max_lng, ., radius_in_metres, grid_n)
 }
 
 #' @export
-generate_kde <- function(pointsdf,
+generate_kde <- function(min_lat,
+                         max_lat,
+                         min_lng,
+                         max_lng,
+                         pointsdf,
                          radius_in_metres = 100,
-                         grid_n = 1000,
-                         min_lat = getOption("ezspatial-min_lat"),
-                         max_lat = getOption("ezspatial-max_lat"),
-                         min_lng = getOption("ezspatial-min_lng"),
-                         max_lng = getOption("ezspatial-max_lng")) {
+                         grid_n = 1000) {
   lims = c(min_lng, max_lng, min_lat, max_lat)
   kde_h = get_h_for_radius_m(radius_in_metres)
 
