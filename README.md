@@ -60,9 +60,9 @@ map_raster(raster, title = "Heatmap - Counting Events")
 Use the `radius_in_metres` parameter to define the bin-width (the area of effect of each point).
 ```
 grid = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
-kde = generate_kde_sf(min_lat, max_lat, min_lng, max_lng, sf_points, radius_in_metres = 10000)
-raster_layer = rasterize_kde(kde, grid)
-map_raster(raster_layer, title = "Heatmap - Smoothed")
+kde = ezspatial::generate_kde_sf(min_lat, max_lat, min_lng, max_lng, sf_points, radius_in_metres = 10000)
+raster_layer = ezspatial::rasterize_kde(kde, grid)
+ezspatial::map_raster(raster_layer, title = "Heatmap - Smoothed")
 ```
 
 ![Grid Counts](/image/smoothed.png) <!-- .element height="50%" width="50%" -->
@@ -70,9 +70,9 @@ map_raster(raster_layer, title = "Heatmap - Smoothed")
 You can also plot the kde values directly using one of:
 
 ```
-plot_kde(kde)
-plot_kde_persp(kde) # Can be pretty slow!
-plot_kde_contours(kde)
+ezspatial::plot_kde(kde)
+ezspatial::plot_kde_persp(kde) # Can be pretty slow!
+ezspatial::plot_kde_contours(kde)
 ```
 
 ### Leaflet Plots
@@ -80,7 +80,7 @@ plot_kde_contours(kde)
 The above raster layers can also be plotted in leaflet:
 
 ```
-map = map_raster_leaflet(raster_layer)
+map = ezspatial::map_raster_leaflet(raster_layer)
 saveWidget(map, file = "map.html")
 ```
 
@@ -89,13 +89,13 @@ saveWidget(map, file = "map.html")
 For converting between lat/long and metres, you can use:
 
 ```
-> deg_lng_per_m()
+> ezspatial::deg_lng_per_m()
 [1] 9.717732e-06
-> deg_lat_per_m()
+> ezspatial::deg_lat_per_m()
 [1] 9.041933e-06
-> m_per_deg_lat()
+> ezspatial::m_per_deg_lat()
 [1] 110595.8
-> m_per_deg_lng()
+> ezspatial::m_per_deg_lng()
 [1] 102904.7
 ```
 
@@ -123,6 +123,6 @@ yl = 53.3962310731233
 yu = 53.6446442889423
 lng_diff = xu - xl
 lat_diff = yu - yl
-ncols = round(lat_diff / (deg_lng_per_m() * grid_in_m))
-nrows = round(lng_diff / (deg_lat_per_m() * grid_in_m))
+ncols = round(lat_diff / (ezspatial::deg_lng_per_m() * grid_in_m))
+nrows = round(lng_diff / (ezspatial::deg_lat_per_m() * grid_in_m))
 ```
