@@ -15,7 +15,7 @@ create_grid <- function(min_lat,
 
 #' @export
 rasterize_points <- function(pointsdf,
-                             grid,
+                             grids,
                              return_df = FALSE) {
   if (is.null(pointsdf$weight)) {
     pointsdf$weight = 1 # Treat each event equally.
@@ -24,7 +24,7 @@ rasterize_points <- function(pointsdf,
   # Not needed with sf df:
   # sp::coordinates(pointsdf) = ~longitude + latitude
   raster_layer = raster::rasterize(pointsdf,
-                                   grid,
+                                   grids,
                                    fun = 'count',
                                    field = 'weight',
                                    background = 0)
@@ -42,7 +42,7 @@ rasterize_points <- function(pointsdf,
 }
 
 #' @export
-rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
+rasterize_kde <- function(kde_data, grids, normalize = TRUE) {
   x = kde_data$x
   y = kde_data$y
   z = c(kde_data$z) # z values, one column after another
@@ -50,7 +50,7 @@ rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
                           latitude = rep(y, each = length(x)),
                           z = z)
   sp::coordinates(point_data) = ~longitude + latitude
-  raster_layer = raster::rasterize(point_data, grid, fun = mean, field = 'z')
+  raster_layer = raster::rasterize(point_data, grids, fun = mean, field = 'z')
 
   if (normalize) {
     raster::values(raster_layer) = 100 * raster::values(raster_layer) / max(raster::values(raster_layer), na.rm = TRUE) # Normalize to [0,100]
@@ -62,7 +62,7 @@ rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
 
 
 
-# rasterize_kde <- function(kde_data, grid, transform = FALSE) {
+# rasterize_kde <- function(kde_data, grids, transform = FALSE) {
 #   if (transform) {
 #     percentile = ecdf(kde_data$z)
 #     kde_data$z = percentile(kde_data$z)
@@ -81,7 +81,7 @@ rasterize_kde <- function(kde_data, grid, normalize = TRUE) {
 #                           latitude = rep(y, each = length(x)),
 #                           z = z)
 #   sp::coordinates(point_data) = ~longitude + latitude
-#   raster_layer = raster::rasterize(point_data, grid, fun = mean, field = 'z')
+#   raster_layer = raster::rasterize(point_data, grids, fun = mean, field = 'z')
 #
 #   return(raster_layer)
 # }
