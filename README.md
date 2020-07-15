@@ -52,7 +52,7 @@ raster = ezspatial::rasterize_points(sf_points, grids)
 map_raster(raster, title = "Heatmap - Counting Events")
 ```
 
-![Grid Counts](/image/gridcounts.png) <!-- .element height="50%" width="50%" -->
+<img src="/image/gridcounts.png" height="50%" width="50%">
 
 
 ### Generating 2D-KDE and plotting
@@ -65,7 +65,8 @@ raster_layer = ezspatial::rasterize_kde(kde, grids)
 ezspatial::map_raster(raster_layer, title = "Heatmap - Smoothed")
 ```
 
-![Grid Counts](/image/smoothed.png) <!-- .element height="50%" width="50%" -->
+<img src="/image/scooters.png" height="50%" width="50%">
+<img src="/image/smoothed.png" height="50%" width="50%">
 
 You can also plot the kde values directly using one of:
 
@@ -86,8 +87,6 @@ dataset = RSocrata::read.socrata("https://data.edmonton.ca/resource/vq44-ni9f.js
 raster_layer = ezspatial::kde_and_rasterize(dataset, min_lat, max_lat, min_lng, max_lng, 50, 50, 500)
 ezspatial::map_raster(raster_layer, title = "Heatmap - Scooter Locations")
 ```
-
-![Grid Counts](/image/scooters.png) <!-- .element height="50%" width="50%" -->
 
 <img src="/image/scooters.png" height="50%" width="50%">
 
