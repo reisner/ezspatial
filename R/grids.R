@@ -59,29 +59,28 @@ rasterize_kde <- function(kde_data, grids, normalize = TRUE) {
   raster_layer
 }
 
-
-
-
-# rasterize_kde <- function(kde_data, grids, transform = FALSE) {
 #   if (transform) {
 #     percentile = ecdf(kde_data$z)
 #     kde_data$z = percentile(kde_data$z)
 #     #kde_data$z = log(kde_data$z)
 #     #kde_data$z = 1/rank(kde_data$z)
 #   }
-#
-#
 #   # Normalize to [0, 100]
 #   kde_data$z = 100 * kde_data$z / max(kde_data$z)
 #
-#   x = kde_data$x
-#   y = kde_data$y
-#   z = c(kde_data$z) # z values, one column after another
-#   point_data = data.frame(longitude = rep(x, length(y)),
-#                           latitude = rep(y, each = length(x)),
-#                           z = z)
-#   sp::coordinates(point_data) = ~longitude + latitude
-#   raster_layer = raster::rasterize(point_data, grids, fun = mean, field = 'z')
-#
-#   return(raster_layer)
-# }
+
+#' @export
+kde_and_rasterize <- function(dataset,
+                              min_lat,
+                              max_lat,
+                              min_lng,
+                              max_lng,
+                              num_grid_rows,
+                              num_grid_cols,
+                              kde_radius_in_m) {
+  grids = create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = num_grid_rows, num_cols = num_grid_cols)
+  kde = generate_kde(min_lat, max_lat, min_lng, max_lng, dataset, radius_in_metres = kde_radius_in_m)
+  raster_layer = rasterize_kde(kde, grids)
+
+  raster_layer
+}

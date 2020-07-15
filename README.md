@@ -47,8 +47,8 @@ First 10 features:
 ### Counting events in a grid
 
 ```
-grid = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
-raster = ezspatial::rasterize_points(sf_points, grid)
+grids = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
+raster = ezspatial::rasterize_points(sf_points, grids)
 map_raster(raster, title = "Heatmap - Counting Events")
 ```
 
@@ -59,9 +59,9 @@ map_raster(raster, title = "Heatmap - Counting Events")
 
 Use the `radius_in_metres` parameter to define the bin-width (the area of effect of each point).
 ```
-grid = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
+grids = ezspatial::create_grid(min_lat, max_lat, min_lng, max_lng, num_rows = 50, num_cols = 50)
 kde = ezspatial::generate_kde_sf(min_lat, max_lat, min_lng, max_lng, sf_points, radius_in_metres = 10000)
-raster_layer = ezspatial::rasterize_kde(kde, grid)
+raster_layer = ezspatial::rasterize_kde(kde, grids)
 ezspatial::map_raster(raster_layer, title = "Heatmap - Smoothed")
 ```
 
@@ -74,6 +74,22 @@ ezspatial::plot_kde(kde)
 ezspatial::plot_kde_persp(kde) # Can be pretty slow!
 ezspatial::plot_kde_contours(kde)
 ```
+
+There is also a single function entry point for the above 2D-KDE / Rasterization workflow:
+
+```
+library(dplyr)
+# E-scooter locations:
+dataset = RSocrata::read.socrata("https://data.edmonton.ca/resource/vq44-ni9f.json") %>%
+  mutate(longitude = as.numeric(longitude), latitude = as.numeric(latitude))
+
+raster_layer = ezspatial::kde_and_rasterize(dataset, min_lat, max_lat, min_lng, max_lng, 50, 50, 500)
+ezspatial::map_raster(raster_layer, title = "Heatmap - Scooter Locations")
+```
+
+![Grid Counts](/image/scooters.png) <!-- .element height="50%" width="50%" -->
+
+<img src="/image/scooters.png" height="50%" width="50%">
 
 ### Leaflet Plots
 
