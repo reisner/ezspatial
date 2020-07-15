@@ -65,7 +65,6 @@ raster_layer = ezspatial::rasterize_kde(kde, grids)
 ezspatial::map_raster(raster_layer, title = "Heatmap - Smoothed")
 ```
 
-<img src="/image/scooters.png" height="50%" width="50%">
 <img src="/image/smoothed.png" height="50%" width="50%">
 
 You can also plot the kde values directly using one of:
